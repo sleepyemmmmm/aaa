@@ -61,3 +61,30 @@ class AreaCalculatorApp:
             ttk.Label(self.input_frame, text="直径：").pack()
             self.diameter_entry = ttk.Entry(self.input_frame)
             self.diameter_entry.pack()
+
+ def on_shape_selected(self, event):
+        self.create_input_fields()
+
+    def calculate_area(self):
+        shape = self.shape_var.get()
+        unit = self.unit_var.get()
+
+        if shape == "正方形":
+            side = float(self.side_entry.get())
+            area = calculate_square_area(side)
+        elif shape == "长方形":
+            length = float(self.length_entry.get())
+            width = float(self.width_entry.get())
+            area = calculate_rectangle_area(length, width)
+        elif shape == "三角形":
+            base = float(self.base_entry.get())
+            height = float(self.height_entry.get())
+            area = calculate_triangle_area(base, height)
+        elif shape == "圆形":
+            diameter = float(self.diameter_entry.get())
+            area = calculate_circle_area(diameter)
+
+        if unit == "in":
+            area *= 2.54 ** 2
+
+        self.result_label.config(text=f"{shape}，面积为：{area:.3f} 平方厘米")
